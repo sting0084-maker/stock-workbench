@@ -1,7 +1,9 @@
 import json
 import random
+import re
 import time
 import urllib.parse
+import urllib.request
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -137,6 +139,7 @@ def init_state():
     ss.setdefault("ratio", "1:1")
     ss.setdefault("chips", random.sample(SUGGEST_POOL, 5))
     ss.setdefault("preview_url", "")
+    ss.setdefault("preview_bytes", b"")
     ss.setdefault("preview_prompt", "")
     ss.setdefault("last_gen", 0.0)
 
@@ -265,6 +268,29 @@ def pollinations_url(img_prompt, ratio, seed):
     )
 
 
+def fetch_image(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=90) as resp:
+        return resp.read()
+
+
+def generate_preview(img_prompt):
+    seed = random.randint(1, 999999)
+    url = pollinations_url(img_prompt, st.session_state.ratio, seed)
+    with st.spinner("시안을 가져오는 중..."):
+        data = fetch_image(url)
+    st.session_state.preview_url = url
+    st.session_state.preview_bytes = data
+    st.session_state.preview_prompt = img_prompt
+    st.session_state.last_gen = time.time()
+
+
+def preview_filename():
+    raw = st.session_state.keyword.strip() or "sian"
+    safe = re.sub(r"[^\w가-힣]+", "_", raw).strip("_") or "sian"
+    return f"{safe}_sian.jpg"
+
+
 def render_prompt_builder():
     st.markdown(
         """
@@ -344,6 +370,7 @@ def render_prompt_builder():
             st.session_state.moods = []
             st.session_state.colors = []
             st.session_state.preview_url = ""
+            st.session_state.preview_bytes = b""
             st.rerun()
 
     prompt, empty_msg = build_prompt()
@@ -360,22 +387,31 @@ def render_prompt_builder():
             elif wait_left > 0:
                 st.warning(f"무료 API 제한입니다. {int(wait_left)+1}초 후 다시 눌러 주세요.")
             else:
-                seed = random.randint(1, 999999)
-                st.session_state.preview_url = pollinations_url(img_prompt, st.session_state.ratio, seed)
-                st.session_state.preview_prompt = img_prompt
-                st.session_state.last_gen = time.time()
+                try:
+                    generate_preview(img_prompt)
+                except Exception as e:
+                    st.error(f"시안을 받지 못했습니다. 잠시 후 다시 시도하세요. ({e})")
 
-        if st.session_state.preview_url:
-            st.image(st.session_state.preview_url, caption="무료 시안 (스톡 원본으로 올리지 마세요)", use_container_width=True)
-            st.link_button("시안 원본 열기", st.session_state.preview_url, use_container_width=True)
+        if st.session_state.preview_bytes:
+            st.image(st.session_state.preview_bytes, caption="무료 시안 (스톡 원본으로 올리지 마세요)", use_container_width=True)
+            st.download_button(
+                "시안 이미지 저장",
+                data=st.session_state.preview_bytes,
+                file_name=preview_filename(),
+                mime="image/jpeg",
+                use_container_width=True,
+            )
+            if st.session_state.preview_url:
+                st.link_button("시안 원본 열기", st.session_state.preview_url, use_container_width=True)
             if st.button("다른 구도로 다시 생성", use_container_width=True):
                 if time.time() - st.session_state.last_gen < 15:
                     st.warning("15초 뒤에 다시 시도하세요.")
                 else:
-                    seed = random.randint(1, 999999)
-                    st.session_state.preview_url = pollinations_url(img_prompt, st.session_state.ratio, seed)
-                    st.session_state.last_gen = time.time()
-                    st.rerun()
+                    try:
+                        generate_preview(img_prompt)
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"시안을 받지 못했습니다. ({e})")
         else:
             st.info("키워드를 넣고 [시안 생성하기]를 누르면 그림이 나옵니다.")
 
