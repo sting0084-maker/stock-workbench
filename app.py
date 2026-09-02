@@ -56,52 +56,92 @@ MANDATORY_GUIDE = (
 )
 
 STYLES = [
-    "플랫아이콘", "라인아트", "지오메트릭", "아이소메트릭", "코퍼레이트", "수채화",
-    "색연필", "판화", "페이퍼 컷아웃", "빈티지", "레트로",
-    "보태니컬", "플로럴", "픽셀아트",
+    "색덩어리로 단순하게",
+    "선만 있는 그림",
+    "네모 세모로 단순하게",
+    "살짝 입체처럼",
+    "자료집에 넣는 그림",
+    "물감이 번진 듯",
+    "색연필로 그린 듯",
+    "도장 찍은 듯",
+    "색종이 오린 듯",
+    "오래된 그림 느낌",
+    "옛날 포스터 느낌",
+    "식물도감처럼",
+    "꽃무늬 느낌",
+    "게임 점 그림",
+    "만화처럼",
+    "색칠공부 선",
+    "사인펜으로 그린 듯",
+    "스티커처럼",
+    "동그란 아이콘",
+    "포스터처럼 진하게",
 ]
 STYLE_EN = {
-    "플랫아이콘": "flat vector icon, solid colors, simple shapes, few details",
-    "라인아트": "clean line art vector outline",
-    "지오메트릭": "geometric flat shapes",
-    "아이소메트릭": "isometric cute 3d illustration",
-    "코퍼레이트": "corporate memphis flat vector",
-    "수채화": "soft watercolor illustration",
-    "색연필": "colored pencil sketch",
-    "판화": "woodcut linocut print",
-    "페이퍼 컷아웃": "layered paper cutout craft",
-    "빈티지": "vintage nostalgic illustration",
-    "레트로": "80s retro illustration",
-    "보태니컬": "botanical illustration",
-    "플로럴": "floral elegant illustration",
-    "픽셀아트": "cute 16-bit pixel art",
+    "색덩어리로 단순하게": "flat vector icon, solid colors, simple shapes, few details",
+    "선만 있는 그림": "clean line art vector outline",
+    "네모 세모로 단순하게": "geometric flat shapes",
+    "살짝 입체처럼": "isometric cute 3d illustration",
+    "자료집에 넣는 그림": "corporate memphis flat vector",
+    "물감이 번진 듯": "soft watercolor illustration",
+    "색연필로 그린 듯": "colored pencil sketch",
+    "도장 찍은 듯": "woodcut linocut print",
+    "색종이 오린 듯": "layered paper cutout craft",
+    "오래된 그림 느낌": "vintage nostalgic illustration",
+    "옛날 포스터 느낌": "80s retro illustration",
+    "식물도감처럼": "botanical illustration",
+    "꽃무늬 느낌": "floral elegant illustration",
+    "게임 점 그림": "cute 16-bit pixel art",
+    "만화처럼": "simple cartoon illustration",
+    "색칠공부 선": "coloring book clean outlines",
+    "사인펜으로 그린 듯": "marker pen drawing",
+    "스티커처럼": "die-cut sticker illustration on white",
+    "동그란 아이콘": "simple round app icon style but object only",
+    "포스터처럼 진하게": "bold poster graphic, high contrast",
 }
 MOODS = [
-    "몽환적인", "아늑한", "동화 같은", "판타지", "감성적인",
-    "미니멀", "사이버펑크", "초현실적인", "평화로운",
+    "여백 많고 단순한",
+    "포근한",
+    "귀여운",
+    "동화책처럼",
+    "조용하고 따뜻한",
+    "안개처럼 부드러운",
+    "깨끗한",
+    "화려한",
+    "차분한",
+    "시원한 여름",
+    "따뜻한 가을",
+    "고요한",
+    "꿈처럼 이상한",
+    "네온 도시 느낌",
 ]
 MOOD_EN = {
-    "몽환적인": "dreamy ethereal",
-    "아늑한": "cozy warm",
-    "동화 같은": "whimsical fairy tale",
-    "판타지": "magical fantasy",
-    "감성적인": "emotional poetic",
-    "미니멀": "clean minimal",
-    "사이버펑크": "cyberpunk neon",
-    "초현실적인": "surreal",
-    "평화로운": "peaceful serene",
+    "여백 많고 단순한": "clean minimal",
+    "포근한": "cozy warm",
+    "귀여운": "cute simple",
+    "동화책처럼": "whimsical storybook",
+    "조용하고 따뜻한": "soft warm emotional",
+    "안개처럼 부드러운": "soft gentle",
+    "깨끗한": "clean fresh",
+    "화려한": "bright colorful",
+    "차분한": "calm muted",
+    "시원한 여름": "fresh summer",
+    "따뜻한 가을": "warm autumn",
+    "고요한": "peaceful serene",
+    "꿈처럼 이상한": "surreal",
+    "네온 도시 느낌": "neon city",
 }
-COLORS = ["파스텔", "뮤트", "레트로", "비비드", "네온", "모노톤"]
+COLORS = ["연한 색", "탁한 색", "옛날 색", "선명한 색", "형광 색", "흑백"]
 COLOR_EN = {
-    "파스텔": "soft pastel colors",
-    "뮤트": "muted low saturation colors",
-    "레트로": "retro vintage colors",
-    "비비드": "vivid bright colors",
-    "네온": "neon colors",
-    "모노톤": "monochrome",
+    "연한 색": "soft pastel colors",
+    "탁한 색": "muted low saturation colors",
+    "옛날 색": "retro vintage colors",
+    "선명한 색": "vivid bright colors",
+    "형광 색": "neon colors",
+    "흑백": "monochrome",
 }
 KEYWORD_EN = {
-    "개나리": "forsythia flower branch",
+    "개나리": "forsythia branch",
     "진달래": "azalea flower branch",
     "벚꽃": "cherry blossom branch",
     "나비": "butterfly",
@@ -111,9 +151,9 @@ KEYWORD_EN = {
     "봄꽃 리스": "spring flower wreath",
     "선글라스": "sunglasses",
     "밀짚모자": "straw hat",
-    "튜브": "colorful inflatable pool swim ring toy",
-    "수영튜브": "colorful inflatable pool swim ring toy",
-    "물놀이튜브": "colorful inflatable pool swim ring toy",
+    "튜브": "inflatable swimming pool float ring",
+    "수영튜브": "inflatable swimming pool float ring",
+    "물놀이튜브": "inflatable swimming pool float ring",
     "비치백": "beach bag",
     "파도": "simple ocean wave",
     "야자수": "palm tree",
@@ -133,15 +173,20 @@ KEYWORD_EN = {
     "도토리": "acorn",
 }
 MOOD_IMAGE_EN = {
-    "몽환적인": "soft gentle colors",
-    "아늑한": "warm cozy colors",
-    "동화 같은": "cute simple",
-    "판타지": "clean simple",
-    "감성적인": "soft colors",
-    "미니멀": "minimal clean",
-    "사이버펑크": "simple graphic",
-    "초현실적인": "clean simple",
-    "평화로운": "calm simple",
+    "여백 많고 단순한": "minimal clean",
+    "포근한": "warm cozy colors",
+    "귀여운": "cute simple",
+    "동화책처럼": "cute simple",
+    "조용하고 따뜻한": "soft colors",
+    "안개처럼 부드러운": "soft gentle colors",
+    "깨끗한": "clean simple",
+    "화려한": "bright colors",
+    "차분한": "calm simple",
+    "시원한 여름": "fresh summer colors",
+    "따뜻한 가을": "warm autumn colors",
+    "고요한": "calm simple",
+    "꿈처럼 이상한": "clean simple",
+    "네온 도시 느낌": "simple graphic",
 }
 SUGGEST_POOL = [
     "개나리", "진달래", "벚꽃", "나비", "새싹", "화분", "물뿌리개",
@@ -251,22 +296,40 @@ def keyword_en():
     return KEYWORD_EN.get(raw, raw)
 
 
+SHAPE_HINT = {
+    "inflatable swimming pool float ring": (
+        "top-down view of a round inflatable swim ring, "
+        "wide doughnut shape with a large empty hole in the center, "
+        "plastic air valve on the side, looks like a kids pool float"
+    ),
+    "forsythia branch": (
+        "spring forsythia: thin woody brown twig with many small four-petal "
+        "bright yellow flowers clustered along the stem, almost no leaves"
+    ),
+    "azalea flower branch": "pink azalea flower cluster on a short branch",
+    "cherry blossom branch": "cherry blossom branch with five-petal pink flowers and buds",
+    "watermelon slice": "triangular watermelon slice with rind and seeds",
+    "ice cream cone": "waffle cone with one scoop of ice cream on top",
+    "vintage camera": "old analog camera body with a lens and viewfinder",
+}
+
+
 def build_image_prompt():
     subject = keyword_en()
     styles, moods, colors = sync_choices()
     styles = styles[:1]
     moods = moods[:1]
     colors = colors[:1]
-    style_en = STYLE_EN.get(styles[0], STYLE_EN["플랫아이콘"]) if styles else STYLE_EN["플랫아이콘"]
+    style_en = STYLE_EN.get(styles[0], STYLE_EN["색덩어리로 단순하게"]) if styles else STYLE_EN["색덩어리로 단순하게"]
     mood_en = MOOD_IMAGE_EN.get(moods[0], "simple") if moods else "simple"
     color_en = COLOR_EN.get(colors[0], "2 or 3 solid colors") if colors else "2 or 3 solid colors"
+    shape = SHAPE_HINT.get(subject, f"clearly recognizable {subject}")
     return (
-        f"simple flat vector icon of one {subject}, "
-        f"recognizable {subject}, "
+        f"{shape}, "
+        f"simple flat illustration of {subject}, "
         f"{style_en}, {mood_en}, {color_en}, "
-        "bold simple silhouette, smooth edges, no texture, no shading, "
-        "white background, easy to trace, "
-        f"only one {subject}"
+        "front or top view, white background, "
+        "easy to trace, not abstract, not a machine part, not a 3D torus"
     )
 
 
@@ -402,11 +465,11 @@ def render_prompt_builder():
             value=st.session_state.combine,
         )
 
-        st.subheader("2. 그림 스타일 (1개만 고르세요)")
+        st.subheader("2. 어떤 그림으로 그릴까요 (하나만)")
         st.multiselect("스타일", STYLES, default=st.session_state.styles, max_selections=1, label_visibility="collapsed", key="style_ms")
-        st.subheader("3. 컨셉 & 분위기 (1개만)")
+        st.subheader("3. 어떤 느낌일까요 (하나만)")
         st.multiselect("분위기", MOODS, default=st.session_state.moods, max_selections=1, label_visibility="collapsed", key="mood_ms")
-        st.subheader("4. 색감 (1개만)")
+        st.subheader("4. 색은 어떻게 할까요 (하나만)")
         st.multiselect("색감", COLORS, default=st.session_state.colors, max_selections=1, label_visibility="collapsed", key="color_ms")
 
         st.subheader("5. AI 모델 & 비율")
@@ -451,6 +514,7 @@ def render_prompt_builder():
     with right:
         st.subheader("무료 시안 생성")
         st.caption("Pollinations 무료 API · 키 없음 · 15초 간격 권장 · 참고용 시안")
+        st.caption(f"시안 인식용 단어: {keyword_en()}")
 
         wait_left = 15 - (time.time() - st.session_state.last_gen)
         if st.button("시안 생성하기", type="primary", use_container_width=True):
