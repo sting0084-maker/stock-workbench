@@ -111,7 +111,9 @@ KEYWORD_EN = {
     "봄꽃 리스": "spring flower wreath",
     "선글라스": "sunglasses",
     "밀짚모자": "straw hat",
-    "튜브": "swim ring",
+    "튜브": "colorful inflatable pool swim ring toy",
+    "수영튜브": "colorful inflatable pool swim ring toy",
+    "물놀이튜브": "colorful inflatable pool swim ring toy",
     "비치백": "beach bag",
     "파도": "simple ocean wave",
     "야자수": "palm tree",
@@ -260,9 +262,10 @@ def build_image_prompt():
     color_en = COLOR_EN.get(colors[0], "2 or 3 solid colors") if colors else "2 or 3 solid colors"
     return (
         f"simple flat vector icon of one {subject}, "
+        f"recognizable {subject}, "
         f"{style_en}, {mood_en}, {color_en}, "
         "bold simple silhouette, smooth edges, no texture, no shading, "
-        "no outline frame, white background, easy to trace, "
+        "white background, easy to trace, "
         f"only one {subject}"
     )
 
@@ -307,22 +310,33 @@ btn.addEventListener("click", async () => {{
     )
 
 
-NEGATIVE = (
-    "circle, circular frame, round frame, round badge, button badge, "
-    "plate, dish, medallion, emblem, wreath, oval, vignette, border, "
-    "ring, hoop, circular crop, sticker border, enamel pin"
+NEGATIVE_FRAME = (
+    "picture frame, square frame, ornate border, vignette, badge emblem, "
+    "text, letters, watermark, person, girl, fairy"
+)
+NEGATIVE_CIRCLE = (
+    "circular frame, round badge, button badge, plate, medallion, "
+    "enamel pin, sticker border"
+)
+ROUND_SUBJECTS = (
+    "swim ring", "watermelon", "lemon", "donut", "tube", "ring",
+    "pumpkin", "ball",
 )
 
 
 def pollinations_url(img_prompt, ratio, seed):
     w, h = RATIO_SIZE.get(ratio, (768, 768))
     q = urllib.parse.quote(img_prompt)
-    neg = urllib.parse.quote(NEGATIVE)
+    subj = keyword_en().lower()
+    neg = NEGATIVE_FRAME
+    if not any(word in subj for word in ROUND_SUBJECTS):
+        neg = NEGATIVE_FRAME + ", " + NEGATIVE_CIRCLE
+    neg_q = urllib.parse.quote(neg)
     return (
         f"https://image.pollinations.ai/prompt/{q}"
         f"?width={w}&height={h}&nologo=true&model=gptimage"
         f"&seed={seed}&enhance=false&safe=true"
-        f"&negativePrompt={neg}"
+        f"&negativePrompt={neg_q}"
     )
 
 
