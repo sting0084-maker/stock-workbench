@@ -170,35 +170,30 @@ def build_prompt():
     details_str = ", ".join(details) if details else "손그림 및 일러스트 표현"
     ratio = st.session_state.ratio
 
+    extra = ""
     if st.session_state.combine:
-        sub_chat = (
-            f"\n- 이미지 기획: 내가 제시하는 [{main}]에 맞춰, "
-            "스톡 플랫폼에서 활용도가 높은 일러스트 시안과 조합 요소들을 기획해줘, "
-            "메인 오브젝트와 함께 배치하거나, 각각 개별 스톡 소스로 등록하기 좋은 서브 아이템들로 기획해줘."
+        extra = (
+            f" {main}과 잘 어울리는 소품을 두세 개만 옆에 두되, "
+            "서로 겹치지 않게 떨어뜨려 그리고, 나중에 하나씩 따로 써도 될 정도로 단순하게 구성해 주세요."
         )
-        sub_gem = (
-            f"\n참고사항: 내가 제시하는 [{main}]에 맞춰, "
-            "스톡 플랫폼에서 활용도가 높은 일러스트 시안과 조합 요소들을 기획해줘, "
-            "메인 오브젝트와 함께 배치하거나, 각각 개별 스톡 소스로 등록하기 좋은 서브 아이템들로 기획해줘."
-        )
-    else:
-        sub_chat = ""
-        sub_gem = ""
 
-    if st.session_state.model == "chatgpt":
-        prompt = (
-            "[스톡 요소 이미지 생성 요청]\n"
-            f'"{main}" 중심의 이미지를 생성해줘.{sub_chat}\n'
-            f"- 표현 스타일: {details_str}\n"
-            f"- 종횡비: {ratio}\n\n"
-            f"[필수 지침 사항]:\n{MANDATORY_GUIDE}"
-        )
-    else:
-        prompt = (
-            f'다음 지시사항에 따라 고품질 이미지 스톡 요소를 그려줘: "{main}".{sub_gem}\n'
-            f"스타일: {details_str}, 비율: {ratio}.\n\n"
-            f"[필수 지침 사항]: {MANDATORY_GUIDE}"
-        )
+    ratio_ko = {
+        "1:1": "정사각형",
+        "16:9": "가로로 긴 화면",
+        "9:16": "세로로 긴 화면",
+        "4:3": "조금 가로로 넓은 화면",
+        "3:2": "사진처럼 가로로 넓은 화면",
+    }.get(ratio, ratio)
+
+    prompt = (
+        f"{main}만 중심이 되게 {details_str}로 그려 주세요. "
+        f"미리캔버스 같은 곳에서 쓸 스톡 요소 시안이라 배경은 그리지 말고, "
+        f"너무 복잡하게 만들지 마세요. "
+        f"실사 사진이 아니라 손그림, 일러스트, 카툰, 라인드로잉처럼 보이게 하고, "
+        f"글자나 워터마크는 넣지 마세요. "
+        f"요소끼리 겹치지 않게 {ratio_ko} 비율로 잡아 주세요."
+        f"{extra}"
+    )
     return prompt, ""
 
 
