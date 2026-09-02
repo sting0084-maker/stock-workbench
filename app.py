@@ -217,25 +217,43 @@ def build_image_prompt():
 
 
 def copy_button(label, text, key):
-    if st.button(label, key=key, use_container_width=True, disabled=not bool(text)):
-        payload = json.dumps(text)
-        components.html(
-            f"""
+    if not text:
+        st.button(label, disabled=True, use_container_width=True, key=f"{key}_off")
+        return
+    payload = json.dumps(text)
+    label_js = json.dumps(label)
+    components.html(
+        f"""
+<div style="font-family:sans-serif;">
+  <button id="btn_{key}" style="width:100%;height:42px;border:0;border-radius:6px;
+    background:#c45c26;color:#fff;font-weight:700;cursor:pointer;">{label}</button>
+  <div id="msg_{key}" style="margin-top:6px;font-size:13px;color:#1f2a24;"></div>
+</div>
 <script>
-const t = {payload};
-navigator.clipboard.writeText(t).then(() => {{}}).catch(() => {{
-  const el = document.createElement('textarea');
-  el.value = t;
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  el.remove();
+const text = {payload};
+const btn = document.getElementById("btn_{key}");
+const msg = document.getElementById("msg_{key}");
+btn.addEventListener("click", async () => {{
+  try {{
+    await navigator.clipboard.writeText(text);
+    msg.innerText = "복사됨. 붙여넣기 하세요.";
+  }} catch (e) {{
+    const el = document.createElement("textarea");
+    el.value = text;
+    el.style.position = "fixed";
+    el.style.left = "-9999px";
+    document.body.appendChild(el);
+    el.focus();
+    el.select();
+    const ok = document.execCommand("copy");
+    el.remove();
+    msg.innerText = ok ? "복사됨. 붙여넣기 하세요." : "아래 글상자를 길게 눌러 복사하세요.";
+  }}
 }});
 </script>
-            """,
-            height=0,
-        )
-        st.success("클립보드에 복사했습니다. ChatGPT/Gemini에 붙여 넣으세요.")
+        """,
+        height=72,
+    )
 
 
 def pollinations_url(img_prompt, ratio, seed):
