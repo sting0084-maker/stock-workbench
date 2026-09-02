@@ -56,11 +56,12 @@ MANDATORY_GUIDE = (
 )
 
 STYLES = [
-    "라인아트", "지오메트릭", "아이소메트릭", "코퍼레이트", "수채화",
+    "플랫아이콘", "라인아트", "지오메트릭", "아이소메트릭", "코퍼레이트", "수채화",
     "색연필", "판화", "페이퍼 컷아웃", "빈티지", "레트로",
     "보태니컬", "플로럴", "픽셀아트",
 ]
 STYLE_EN = {
+    "플랫아이콘": "flat vector icon, solid colors, simple shapes, few details",
     "라인아트": "clean line art vector outline",
     "지오메트릭": "geometric flat shapes",
     "아이소메트릭": "isometric cute 3d illustration",
@@ -254,14 +255,15 @@ def build_image_prompt():
     styles = styles[:1]
     moods = moods[:1]
     colors = colors[:1]
-    style_en = STYLE_EN.get(styles[0], "colored pencil illustration") if styles else "colored pencil illustration"
-    mood_en = MOOD_IMAGE_EN.get(moods[0], "simple cute") if moods else "simple cute"
-    color_en = COLOR_EN.get(colors[0], "natural colors") if colors else "natural colors"
+    style_en = STYLE_EN.get(styles[0], STYLE_EN["플랫아이콘"]) if styles else STYLE_EN["플랫아이콘"]
+    mood_en = MOOD_IMAGE_EN.get(moods[0], "simple") if moods else "simple"
+    color_en = COLOR_EN.get(colors[0], "2 or 3 solid colors") if colors else "2 or 3 solid colors"
     return (
-        f"a single {subject} drawn in the middle of a blank white square paper, "
+        f"simple flat vector icon of one {subject}, "
         f"{style_en}, {mood_en}, {color_en}, "
-        "loose hand illustration on empty white paper, "
-        f"only the {subject}, simple and clear"
+        "bold simple silhouette, smooth edges, no texture, no shading, "
+        "no outline frame, white background, easy to trace, "
+        f"only one {subject}"
     )
 
 
