@@ -1,7 +1,9 @@
+import json
 import random
 import time
 import urllib.parse
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="벡터 작업대",
@@ -219,6 +221,28 @@ def build_image_prompt():
     )
 
 
+def copy_button(label, text, key):
+    if st.button(label, key=key, use_container_width=True, disabled=not bool(text)):
+        payload = json.dumps(text)
+        components.html(
+            f"""
+<script>
+const t = {payload};
+navigator.clipboard.writeText(t).then(() => {{}}).catch(() => {{
+  const el = document.createElement('textarea');
+  el.value = t;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  el.remove();
+}});
+</script>
+            """,
+            height=0,
+        )
+        st.success("클립보드에 복사했습니다. ChatGPT/Gemini에 붙여 넣으세요.")
+
+
 def pollinations_url(img_prompt, ratio, seed):
     w, h = RATIO_SIZE.get(ratio, (768, 768))
     q = urllib.parse.quote(img_prompt)
@@ -344,12 +368,17 @@ def render_prompt_builder():
 
         st.markdown("---")
         st.subheader("복사용 프롬프트")
-        st.text_area("ChatGPT / Gemini용", empty_msg or prompt, height=180)
+        shown = empty_msg or prompt
+        st.text_area("ChatGPT / Gemini용", shown, height=180)
         if prompt:
-            st.download_button("프롬프트 저장", prompt, file_name="stock_prompt.txt")
-            st.link_button("ChatGPT", "https://chatgpt.com/")
-            st.link_button("Gemini", "https://gemini.google.com/app")
-        st.caption("무료 시안 품질이 낮으면 이 프롬프트를 Gemini에 붙여 더 좋은 시안을 받으세요.")
+            copy_button("프롬프트 복사", prompt, "copy_prompt")
+            st.code(prompt, language=None)
+            c1, c2 = st.columns(2)
+            with c1:
+                st.link_button("ChatGPT 열기", "https://chatgpt.com/", use_container_width=True)
+            with c2:
+                st.link_button("Gemini 열기", "https://gemini.google.com/app", use_container_width=True)
+        st.caption("복사한 뒤 ChatGPT/Gemini에 붙여 넣으세요. 텍스트 파일로 저장하지 않아도 됩니다.")
 
 
 def render_calendar():
