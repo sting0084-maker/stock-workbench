@@ -258,15 +258,10 @@ def build_image_prompt():
     mood_en = MOOD_IMAGE_EN.get(moods[0], "simple cute") if moods else "simple cute"
     color_en = COLOR_EN.get(colors[0], "natural colors") if colors else "natural colors"
     return (
-        f"{subject}, a single {subject} only, one {subject} in the center, "
+        f"a single {subject} drawn in the middle of a blank white square paper, "
         f"{style_en}, {mood_en}, {color_en}, "
-        "hand drawn clipart sticker look, isolated object, "
-        "plain pure white background, no other objects, "
-        "no circle, no round frame, no circular border, no plate, no badge, "
-        "no medallion, no emblem, no wreath frame, no vignette, no oval frame, "
-        "no fairy, no girl, no person, no character, no face, no wings, "
-        "no landscape, no room, no table, no text, no letters, no watermark, "
-        "not photorealistic"
+        "loose hand illustration on empty white paper, "
+        f"only the {subject}, simple and clear"
     )
 
 
@@ -310,12 +305,22 @@ btn.addEventListener("click", async () => {{
     )
 
 
+NEGATIVE = (
+    "circle, circular frame, round frame, round badge, button badge, "
+    "plate, dish, medallion, emblem, wreath, oval, vignette, border, "
+    "ring, hoop, circular crop, sticker border, enamel pin"
+)
+
+
 def pollinations_url(img_prompt, ratio, seed):
     w, h = RATIO_SIZE.get(ratio, (768, 768))
     q = urllib.parse.quote(img_prompt)
+    neg = urllib.parse.quote(NEGATIVE)
     return (
         f"https://image.pollinations.ai/prompt/{q}"
-        f"?width={w}&height={h}&nologo=true&model=flux&seed={seed}&enhance=false&safe=true"
+        f"?width={w}&height={h}&nologo=true&model=gptimage"
+        f"&seed={seed}&enhance=false&safe=true"
+        f"&negativePrompt={neg}"
     )
 
 
