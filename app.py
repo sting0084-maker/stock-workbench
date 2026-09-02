@@ -99,6 +99,47 @@ COLOR_EN = {
     "네온": "neon colors",
     "모노톤": "monochrome",
 }
+KEYWORD_EN = {
+    "개나리": "forsythia flower branch",
+    "진달래": "azalea flower branch",
+    "벚꽃": "cherry blossom branch",
+    "나비": "butterfly",
+    "새싹": "green sprout",
+    "화분": "potted plant",
+    "물뿌리개": "watering can",
+    "봄꽃 리스": "spring flower wreath",
+    "선글라스": "sunglasses",
+    "밀짚모자": "straw hat",
+    "튜브": "swim ring",
+    "비치백": "beach bag",
+    "파도": "simple ocean wave",
+    "야자수": "palm tree",
+    "아이스크림": "ice cream cone",
+    "수박": "watermelon slice",
+    "레몬": "lemon fruit",
+    "할로윈": "jack-o-lantern pumpkin",
+    "유령": "cute ghost",
+    "단풍": "maple leaf",
+    "낙엽": "fallen autumn leaf",
+    "토끼": "rabbit",
+    "고양이": "cat",
+    "레트로라디오": "vintage radio",
+    "빈티지카메라": "vintage camera",
+    "스케치북": "sketchbook",
+    "핫초코": "hot chocolate mug",
+    "도토리": "acorn",
+}
+MOOD_IMAGE_EN = {
+    "몽환적인": "soft gentle colors",
+    "아늑한": "warm cozy colors",
+    "동화 같은": "cute simple",
+    "판타지": "clean simple",
+    "감성적인": "soft colors",
+    "미니멀": "minimal clean",
+    "사이버펑크": "simple graphic",
+    "초현실적인": "clean simple",
+    "평화로운": "calm simple",
+}
 SUGGEST_POOL = [
     "개나리", "진달래", "벚꽃", "나비", "새싹", "화분", "물뿌리개",
     "봄꽃 리스", "선글라스", "밀짚모자", "튜브", "비치백", "파도",
@@ -200,22 +241,32 @@ def build_prompt():
     return prompt, ""
 
 
+def keyword_en():
+    raw = st.session_state.keyword.strip()
+    if not raw:
+        return "object"
+    return KEYWORD_EN.get(raw, raw)
+
+
 def build_image_prompt():
-    keyword = st.session_state.keyword.strip() or "spring flower"
+    subject = keyword_en()
     styles, moods, colors = sync_choices()
     styles = styles[:1]
     moods = moods[:1]
     colors = colors[:1]
-    style_en = STYLE_EN.get(styles[0], "simple stock illustration") if styles else "simple stock clipart icon"
-    mood_en = MOOD_EN.get(moods[0], "") if moods else ""
-    color_en = COLOR_EN.get(colors[0], "") if colors else ""
+    style_en = STYLE_EN.get(styles[0], "colored pencil illustration") if styles else "colored pencil illustration"
+    mood_en = MOOD_IMAGE_EN.get(moods[0], "simple cute") if moods else "simple cute"
+    color_en = COLOR_EN.get(colors[0], "natural colors") if colors else "natural colors"
     return (
-        f"stock vector clipart of a single {keyword}, "
+        f"{subject}, a single {subject} only, one {subject} in the center, "
         f"{style_en}, {mood_en}, {color_en}, "
-        "only the object, centered, isolated on pure white background, "
-        "no person, no girl, no character, no face, no glass box, no room, "
-        "no scenery, no story scene, no text, no letters, no watermark, "
-        "flat design, clean edges, product icon, not photorealistic"
+        "hand drawn clipart sticker look, isolated object, "
+        "plain pure white background, no other objects, "
+        "no circle, no round frame, no circular border, no plate, no badge, "
+        "no medallion, no emblem, no wreath frame, no vignette, no oval frame, "
+        "no fairy, no girl, no person, no character, no face, no wings, "
+        "no landscape, no room, no table, no text, no letters, no watermark, "
+        "not photorealistic"
     )
 
 
@@ -264,7 +315,7 @@ def pollinations_url(img_prompt, ratio, seed):
     q = urllib.parse.quote(img_prompt)
     return (
         f"https://image.pollinations.ai/prompt/{q}"
-        f"?width={w}&height={h}&nologo=true&model=flux&seed={seed}&enhance=true"
+        f"?width={w}&height={h}&nologo=true&model=flux&seed={seed}&enhance=false&safe=true"
     )
 
 
